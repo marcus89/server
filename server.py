@@ -55,56 +55,213 @@ HTML = """
 
 <style>
 body {
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top, #1a1f2b, #0b0d12);
+  color: #e8e8e8;
   max-width: 1000px;
   margin: auto;
-  padding: 20px;
+  padding: 24px;
 }
 
-.tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+/* TITLE like pedal label */
+h1 {
+  text-align: center;
+
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-size: 20px;
+
+  margin-bottom: 28px;
+
+  text-transform: uppercase;
+
+  color: #cfd6e6;
+
+  /* hardware panel feel */
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  background: linear-gradient(180deg, #151a25, #0f121a);
+  border: 1px solid #2a3344;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 6px 18px rgba(0,0,0,0.4);
 }
 
+/* TABS → now look like stomp buttons */
 .tab {
-  padding: 10px 15px;
-  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 12px 18px;
+  margin-right: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  user-select: none;
+
+  background: linear-gradient(#2a3140, #1b2130);
+  border: 1px solid #3a455a;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 3px 10px rgba(0,0,0,0.4);
+
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  transition: 0.15s;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+  border-color: #6aa6ff;
 }
 
 .panel {
   display: none;
+  margin-top: 22px;
 }
 
-.panel.active {
+.active {
   display: block;
 }
 
+/* DROPZONE → looks like pedal slot / input jack */
 .dropzone {
-  border: 2px dashed #999;
-  padding: 40px;
+  border-radius: 14px;
+  border: 1px dashed #3c465c;
+  background: linear-gradient(180deg, #151a25, #10131b);
+  padding: 34px;
+
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
+
+  color: #9aa6bd;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03);
   transition: 0.2s;
 }
 
-.dropzone.drag {
-  background: #eee;
-  border-color: #333;
+.dropzone:hover {
+  border-color: #6aa6ff;
+  color: #d7e6ff;
 }
 
+.dropzone.drag {
+  border-color: #00ffd5;
+  background: linear-gradient(180deg, #162a2a, #0f1717);
+  box-shadow: 0 0 20px rgba(0,255,213,0.15);
+}
+
+/* EFFECT LIST → pedal slots */
 ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
 }
 
 li {
-  padding: 6px 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 14px;
+  margin-bottom: 10px;
+
+  background: linear-gradient(180deg, #151a25, #0f121a);
+  border: 1px solid #2a3344;
+  border-radius: 12px;
+
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
 }
+
+/* “active signal” accent */
+li:hover {
+  border-color: #6aa6ff;
+}
+
+/* links = subtle LED */
+li a {
+  color: #6aa6ff;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+li a:hover {
+  text-shadow: 0 0 6px rgba(106,166,255,0.6);
+}
+
+/* optional pedal glow effect */
+.panel.active {
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0.6; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tag {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+/* reverb → blue */
+.tag.reverb { background: #4da3ff; box-shadow: 0 0 10px #4da3ff; }
+
+/* delay → purple */
+.tag.delay { background: #b26cff; box-shadow: 0 0 10px #b26cff; }
+
+/* distortion → red */
+.tag.distortion { background: #ff4d4d; box-shadow: 0 0 10px #ff4d4d; }
+
+/* chorus/mod → green */
+.tag.chorus,
+.tag.mod { background: #35e6a3; box-shadow: 0 0 10px #35e6a3; }
+
+/* default */
+.tag.default { background: #666; }
+
+.filter-btn {
+  display: inline-block;
+  padding: 6px 10px;
+  margin-right: 6px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+
+  background: #141823;
+  border: 1px solid #2a3344;
+  color: #aab6cc;
+  transition: 0.15s;
+}
+
+.filter-btn:hover {
+  border-color: #6aa6ff;
+  color: #fff;
+}
+
+.filter-btn.active {
+  background: #1f2a3d;
+  border-color: #6aa6ff;
+  color: #fff;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab.active {
+  background: #1f2a3d;
+  box-shadow: inset 0 0 0 1px #6aa6ff, 0 0 12px rgba(106,166,255,0.3);
+}
+
 </style>
 </head>
 
@@ -113,41 +270,78 @@ li {
 <h1>Audio Server</h1>
 
 <div class="tabs">
-  <div class="tab" onclick="show('effects')">effects</div>
-  <div class="tab" onclick="show('midi')">midi</div>
-  <div class="tab" onclick="show('conf')">conf</div>
+  <div class="tab active" onclick="showTab('effects', this)">effects</div>
+  <div class="tab" onclick="showTab('midi', this)">midi</div>
+  <div class="tab" onclick="showTab('conf', this)">conf</div>
 </div>
 
 <!-- EFFECTS -->
 <div id="effects" class="panel active">
-
-  <h2>effects (.lv2)</h2>
-
   <div class="dropzone" id="dz-effects">
     Drag & drop LV2 zip here
     <br><br>
-    <input type="file" id="file-effects">
   </div>
+<div style="margin-bottom:12px">
 
-  <ul>
+<span class="filter-btn active" onclick="filterLV2('all', this)">
+  <span class="tag default"></span> ALL
+</span>
+
+<span class="filter-btn" onclick="filterLV2('reverb', this)">
+  <span class="tag reverb"></span> REVERB
+</span>
+
+<span class="filter-btn" onclick="filterLV2('delay', this)">
+  <span class="tag delay"></span> DELAY
+</span>
+
+<span class="filter-btn" onclick="filterLV2('distortion', this)">
+  <span class="tag distortion"></span> DIST
+</span>
+
+<span class="filter-btn" onclick="filterLV2('chorus', this)">
+  <span class="tag chorus"></span> MOD
+</span>
+
+<span class="filter-btn" onclick="filterLV2('other', this)">
+  <span class="tag default"></span> OTHER
+</span>
+
+</div>
+
+    <ul>
     {% for f in effects %}
-      <li>
+
+        <li class="lv2-item"
+            data-type="{% if 'reverb' in f %}reverb
+            {%- elif 'delay' in f %}delay
+            {%- elif 'dist' in f %}distortion
+            {%- elif 'chorus' in f or 'mod' in f %}chorus
+            {%- else %}other{% endif %}">
+
+        <span class="tag {{ 'reverb' if 'reverb' in f
+            else 'delay' if 'delay' in f
+            else 'distortion' if 'dist' in f
+            else 'chorus' if 'chorus' in f or 'mod' in f
+            else 'default' }}"></span>
+
         <span>{{f}}</span>
-        <a href="/download/effects/{{f}}">download</a>
-      </li>
+
+        <span style="margin-left:auto">
+            <a href="/download/effects/{{f}}">download</a>
+        </span>
+
+        </li>
+
     {% endfor %}
-  </ul>
+    </ul>
 </div>
 
 <!-- MIDI -->
 <div id="midi" class="panel">
-
-  <h2>midi</h2>
-
   <div class="dropzone" id="dz-midi">
     Drag & drop MIDI here
     <br><br>
-    <input type="file" id="file-midi">
   </div>
 
   <ul>
@@ -162,13 +356,9 @@ li {
 
 <!-- CONF -->
 <div id="conf" class="panel">
-
-  <h2>conf</h2>
-
   <div class="dropzone" id="dz-conf">
     Drag & drop config here
     <br><br>
-    <input type="file" id="file-conf">
   </div>
 
   <ul>
@@ -183,9 +373,19 @@ li {
 
 <script>
 
-function show(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+function showTab(id, el) {
+
+  // hide panels
+  document.querySelectorAll('.panel')
+    .forEach(p => p.classList.remove('active'));
+
   document.getElementById(id).classList.add('active');
+
+  // update tab highlight
+  document.querySelectorAll('.tab')
+    .forEach(t => t.classList.remove('active'));
+
+  el.classList.add('active');
 }
 
 // ---------------- DRAG & DROP ----------------
@@ -235,6 +435,28 @@ setupDrop("dz-effects", "file-effects", "/api/upload/effects");
 setupDrop("dz-midi", "file-midi", "/api/upload/midi");
 setupDrop("dz-conf", "file-conf", "/api/upload/conf");
 
+function filterLV2(type, btn) {
+
+  // reset button states
+  document.querySelectorAll('.filter-btn')
+    .forEach(b => b.classList.remove('active'));
+
+  btn.classList.add('active');
+
+  // filter items
+  document.querySelectorAll('.lv2-item')
+    .forEach(item => {
+
+      const t = item.dataset.type;
+
+      if (type === 'all' || t === type) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+
+    });
+}
 </script>
 
 </body>
