@@ -270,118 +270,108 @@ li a:hover {
 <h1>Audio Server</h1>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('effects', this)">effects</div>
-  <div class="tab" onclick="showTab('midi', this)">midi</div>
-  <div class="tab" onclick="showTab('conf', this)">conf</div>
+    <div class="tab active" onclick="showTab('effects', this)">effects</div>
+    <div class="tab" onclick="showTab('midi', this)">midi</div>
+    <div class="tab" onclick="showTab('conf', this)">conf</div>
 </div>
 
 <!-- EFFECTS -->
 <div id="effects" class="panel active">
-  <div class="dropzone" id="dz-effects">
-    Drag & drop LV2 zip here
-    <br><br>
-  </div>
-<div style="margin-bottom:12px">
-
-<span class="filter-btn active" onclick="filterLV2('all', this)">
-  <span class="tag default"></span> ALL
-</span>
-
-<span class="filter-btn" onclick="filterLV2('reverb', this)">
-  <span class="tag reverb"></span> REVERB
-</span>
-
-<span class="filter-btn" onclick="filterLV2('delay', this)">
-  <span class="tag delay"></span> DELAY
-</span>
-
-<span class="filter-btn" onclick="filterLV2('distortion', this)">
-  <span class="tag distortion"></span> DIST
-</span>
-
-<span class="filter-btn" onclick="filterLV2('chorus', this)">
-  <span class="tag chorus"></span> MOD
-</span>
-
-<span class="filter-btn" onclick="filterLV2('other', this)">
-  <span class="tag default"></span> OTHER
-</span>
-
-</div>
+    <div class="dropzone" id="dz-effects">
+        Drag & drop LV2 zip here
+        <br><br>
+    </div>
+    <div style="margin-bottom:12px">
+        <span class="filter-btn active" onclick="filterLV2('all', this)">
+        <span class="tag default"></span> ALL
+        </span>
+        <span class="filter-btn" onclick="filterLV2('reverb', this)">
+        <span class="tag reverb"></span> REVERB
+        </span>
+        <span class="filter-btn" onclick="filterLV2('delay', this)">
+        <span class="tag delay"></span> DELAY
+        </span>
+        <span class="filter-btn" onclick="filterLV2('distortion', this)">
+        <span class="tag distortion"></span> DIST
+        </span>
+        <span class="filter-btn" onclick="filterLV2('chorus', this)">
+        <span class="tag chorus"></span> MOD
+        </span>
+        <span class="filter-btn" onclick="filterLV2('other', this)">
+        <span class="tag default"></span> OTHER
+        </span>
+    </div>
 
     <ul>
-    {% for f in effects %}
+        {% for f in effects %}
+            <li class="lv2-item"
+                data-type="{% if 'reverb' in f %}reverb
+                {%- elif 'delay' in f %}delay
+                {%- elif 'dist' in f %}distortion
+                {%- elif 'chorus' in f or 'mod' in f %}chorus
+                {%- else %}other{% endif %}">
 
-        <li class="lv2-item"
-            data-type="{% if 'reverb' in f %}reverb
-            {%- elif 'delay' in f %}delay
-            {%- elif 'dist' in f %}distortion
-            {%- elif 'chorus' in f or 'mod' in f %}chorus
-            {%- else %}other{% endif %}">
+            <span class="tag {{ 'reverb' if 'reverb' in f
+                else 'delay' if 'delay' in f
+                else 'distortion' if 'dist' in f
+                else 'chorus' if 'chorus' in f or 'mod' in f
+                else 'default' }}"></span>
 
-        <span class="tag {{ 'reverb' if 'reverb' in f
-            else 'delay' if 'delay' in f
-            else 'distortion' if 'dist' in f
-            else 'chorus' if 'chorus' in f or 'mod' in f
-            else 'default' }}"></span>
+            <span>{{f}}</span>
 
-        <span>{{f}}</span>
+            <span style="margin-left:auto">
+                <a href="/download/effects/{{f}}">download</a>
+            </span>
 
-        <span style="margin-left:auto">
-            <a href="/download/effects/{{f}}">download</a>
-        </span>
+            </li>
 
-        </li>
-
-    {% endfor %}
+        {% endfor %}
     </ul>
 </div>
 
 <!-- MIDI -->
 <div id="midi" class="panel">
-  <div class="dropzone" id="dz-midi">
-    Drag & drop MIDI here
-    <br><br>
-  </div>
+    <div class="dropzone" id="dz-midi">
+        Drag & drop MIDI here
+        <br><br>
+    </div>
 
-  <ul>
-    {% for f in midi %}
-      <li>
-        <span>{{f}}</span>
-        <a href="/download/midi/{{f}}">download</a>
-      </li>
-    {% endfor %}
-  </ul>
+    <ul>
+        {% for f in midi %}
+        <li>
+            <span>{{f}}</span>
+            <a href="/download/midi/{{f}}">download</a>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 
 <!-- CONF -->
 <div id="conf" class="panel">
-  <div class="dropzone" id="dz-conf">
-    Drag & drop config here
-    <br><br>
-  </div>
+    <div class="dropzone" id="dz-conf">
+        Drag & drop config here
+        <br><br>
+    </div>
 
-  <ul>
-    {% for f in conf %}
-      <li>
-        <span>{{f}}</span>
-        <a href="/download/conf/{{f}}">download</a>
-      </li>
-    {% endfor %}
-  </ul>
+    <ul>
+        {% for f in conf %}
+        <li>
+            <span>{{f}}</span>
+            <a href="/download/conf/{{f}}">download</a>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 
 <script>
 
 function showTab(id, el) {
 
-  // hide panels
   document.querySelectorAll('.panel')
     .forEach(p => p.classList.remove('active'));
 
   document.getElementById(id).classList.add('active');
 
-  // update tab highlight
   document.querySelectorAll('.tab')
     .forEach(t => t.classList.remove('active'));
 
